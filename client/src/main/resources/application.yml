@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+grpc-to-database:
+  address: "localhost"
+  port: 8888
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS

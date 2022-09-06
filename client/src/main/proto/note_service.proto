@@ -1,0 +1,27 @@
+syntax = "proto3";
+package com.example.proto;
+option java_multiple_files = true;
+
+message NoteDto {
+  int32 id = 1;
+  string message = 2;
+}
+
+message NotesDto {
+  repeated NoteDto notes = 1;
+}
+
+message EmptyDto {
+
+}
+
+message NoteIdDto {
+  int32 id = 1;
+}
+
+service NoteService {
+  rpc FindAll(EmptyDto) returns (NotesDto);
+  rpc FindById(NoteIdDto) returns (NoteDto);
+  rpc Save(NoteDto) returns (EmptyDto);
+  rpc Delete(NoteIdDto) returns (EmptyDto);
+}
