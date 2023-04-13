@@ -20,7 +20,8 @@ message NoteIdDto {
 }
 
 service NoteService {
-  rpc FindAll(EmptyDto) returns (NotesDto);
+  rpc FindAll(EmptyDto) returns (stream NoteDto);
+  rpc FindAllBadIdea(EmptyDto) returns (NotesDto);
   rpc FindById(NoteIdDto) returns (NoteDto);
   rpc Save(NoteDto) returns (EmptyDto);
   rpc Delete(NoteIdDto) returns (EmptyDto);

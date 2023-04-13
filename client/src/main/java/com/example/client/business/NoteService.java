@@ -8,22 +8,21 @@ import java.util.Collection;
 @Service
 @RequiredArgsConstructor
 public class NoteService {
-
-    private final NoteRepository noteRepository;
+    private final NoteRepository noteGrpcClient;
 
     public Note findById(int id) {
-        return noteRepository.findById(id);
+        return noteGrpcClient.findById(id);
     }
 
     public Collection<Note> findAll() {
-        return noteRepository.findAll();
+        return noteGrpcClient.findAll();
     }
 
     public void save(Note note) {
-        noteRepository.save(note);
+        noteGrpcClient.save(note);
     }
 
     public void delete(int id) {
-        noteRepository.delete(id);
+        noteGrpcClient.delete(id);
     }
 }

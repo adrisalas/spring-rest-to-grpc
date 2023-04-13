@@ -18,7 +18,14 @@ public class NoteGrpcController extends NoteServiceImplBase {
     private final NoteService noteService;
 
     @Override
-    public void findAll(EmptyDto request, StreamObserver<NotesDto> responseObserver) {
+    public void findAll(EmptyDto request, StreamObserver<NoteDto> responseObserver) {
+        noteService.findAll()
+                   .forEach(note -> responseObserver.onNext(toGrpc(note)));
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void findAllBadIdea(EmptyDto request, StreamObserver<NotesDto> responseObserver) {
         responseObserver.onNext(NotesDto.newBuilder()
                                         .addAllNotes(noteService.findAll()
                                                                 .stream()

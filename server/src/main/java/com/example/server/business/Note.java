@@ -1,24 +1,13 @@
 package com.example.server.business;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.With;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-import static javax.persistence.GenerationType.IDENTITY;
-
-@Data
+@Getter
 @Builder
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
 public class Note {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private int id;
-    private String message;
+    @With
+    private final int id;
+    private final String message;
 }

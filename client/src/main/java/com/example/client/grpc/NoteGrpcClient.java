@@ -8,6 +8,7 @@ import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,8 +21,8 @@ class NoteGrpcClient implements NoteRepository {
                           @Value("${grpc-to-database.port}") int port) {
         ManagedChannel channel = ManagedChannelBuilder.forAddress(address, port)
                                                       .usePlaintext()
+                                                      .maxInboundMessageSize(Integer.MAX_VALUE)
                                                       .build();
-
         stub = NoteServiceGrpc.newBlockingStub(channel);
     }
 
@@ -32,7 +33,14 @@ class NoteGrpcClient implements NoteRepository {
 
     @Override
     public Collection<Note> findAll() {
-        return toBusiness(stub.findAll(EMPTY));
+        List<Note> notes = new ArrayList<>();
+        stub.findAll(EmptyDto.newBuilder().build())
+            .forEachRemaining(note -> notes.add(toBusiness(note)));
+        return notes;
+    }
+
+    public Collection<Note> findAllBadIdea() {
+        return toBusiness(stub.findAllBadIdea(EMPTY));
     }
 
     @Override
